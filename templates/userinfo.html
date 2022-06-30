@@ -1,0 +1,27 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+<THEAD>
+    <TR>
+        <TD width="1%">
+            Login:
+        </TD>
+        <TD>
+            {$userinfo.login}
+        </TD>
+    </TR>
+</THEAD>
+    <TR>
+        <TD>
+            Password:
+        </TD>
+        <TD>
+                **********
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+			<a href="?m=userdel&id={$userinfo.id}" title="Delete user">X</a>
+        </TD>
+    </TR>
+</TABLE>
+</form>
