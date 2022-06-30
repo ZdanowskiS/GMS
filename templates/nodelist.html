@@ -1,0 +1,24 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>Name</TD><TD>Serial</TD><TD>Device ID</TD><TD>Action</TH>
+    </TR>
+	</THEAD>
+	{foreach from=$nodelist item=node}
+    <TR class="list {cycle values="light,dark"}">
+        <TD><a href="?m=nodeinfo&id={$node.id}">{$node.name}</a></TD>
+        <TD>{$node.serial}</TD>
+        <TD>{$node.deviceid}</TD>
+        <TD align="center">
+			<a href="?m=nodeinfo&id={$node.id}" title="Node info">I</a>
+			<a href="?m=nodeedit&id={$node.id}" title="Edit node">E</a>
+			<a href="?m=nodedel&id={$node.id}" title="Delete node">X</a>
+		</TD>
+    </TR>
+	{foreachelse}
+    <TR>
+        <TD colspan="2">No nodes found in database.</TD>
+    </TR>
+	{/foreach}
+</TABLE>

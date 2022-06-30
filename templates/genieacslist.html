@@ -1,0 +1,23 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>Name</TD><TD>IP</TD><TD align="right">Action</TD>
+    </TR>
+	</THEAD>
+	{foreach from=$genieacslist item=genieacs}
+    <TR class="list {cycle values="light,dark"}">
+        <TD><a href="?m=genieacsinfo&id={$genieacs.id}">{$genieacs.name}</a></TD>
+        <TD><a href="?m=genieacsinfo&id={$genieacs.id}">{$genieacs.url}</a></TD>
+        <TD align="right">
+			<a href="?m=genieacsinfo&id={$genieacs.id}" title="Model info">I</a>
+			<a href="?m=genieacsedit&id={$genieacs.id}" title="Edit model">E</a>
+			<a href="?m=genieacsdel&id={$genieacs.id}" title="Delete model">X</a>
+		</TD>
+    </TR>
+	{foreachelse}
+    <TR>
+        <TD colspan="2">No GenieACS found in database.</TD>
+    </TR>
+	{/foreach}
+</TABLE>

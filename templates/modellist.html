@@ -1,0 +1,22 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>Name</TD><TD align="right">Action</TH>
+    </TR>
+	</THEAD>
+	{foreach from=$modellist item=model}
+    <TR class="list {cycle values="light,dark"}">
+        <TD><a href="?m=modelinfo&id={$model.id}">{$model.name}</a></TD>
+        <TD align="right">
+			<a href="?m=modelinfo&id={$model.id}" title="Model info">I</a>
+			<a href="?m=modeledit&id={$model.id}" title="Edit model">E</a>
+			<a href="?m=modeldel&id={$model.id}" title="Delete model">X</a>
+		</TD>
+    </TR>
+	{foreachelse}
+    <TR>
+        <TD colspan="2">No models found in database.</TD>
+    </TR>
+	{/foreach}
+</TABLE>

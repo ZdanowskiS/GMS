@@ -1,0 +1,33 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=modeledit&amp;id={$modeldata.id}" method="post">
+<p style="display: none;">
+<INPUT type="submit" class="hiddenbtn">
+<INPUT type="text" name="modeledit[id]" value="{$modeldata.id}" class="hiddenbtn">
+</p>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>
+            Model name:
+        </TD>
+        <TD>
+			<input type="text" name="modeledit[name]" class="name" maxlength="64" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$modeldata.name}">
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            Description:
+        </TD>
+        <TD>
+            <textarea name="modeledit[description]" id="description" class="description">{$modeldata.description}</textarea>
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

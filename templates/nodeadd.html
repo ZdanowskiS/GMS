@@ -1,0 +1,85 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=nodeadd" method="post">
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>
+             Name:
+        </TD>
+        <TD>
+			<input type="text" name="nodeadd[name]" id='name' placeholder="" size="32" 
+{if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if}  value="{$nodedata.name}" >
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            Customer:
+        </TD>
+        <TD>
+			<SELECT size="1" name="nodeadd[customerid]" {if $error.customerid}title="{$error.customerid}" style="background-color : #FF0000;"{/if} >
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$customerlist key=key item=customer}
+           			<OPTION value="{$customer.id}" {if $customer.id==$nodedata.customerid}SELECTED{/if}>{$customer.name} {$customer.lastname} ({$customer.id})</OPTION>
+				{/foreach}
+			</SELECT>
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            GenieACS:
+        </TD>
+        <TD>
+			<SELECT size="1" name="nodeadd[genieacsid]" {if $error.genieacsid}title="{$error.geniacsid}" style="background-color : #FF0000;"{/if} >
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$genieacslist key=key item=genieacs}
+           			<OPTION value="{$genieacs.id}" {if $genieacs.id==$nodedata.genieacsid}SELECTED{/if}>{$genieacs.name} ({$genieacs.id})</OPTION>
+				{/foreach}
+			</SELECT>
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Model:
+        </TD>
+        <TD>
+			<SELECT size="1" name="nodeadd[modelid]" {if $error.modelid}title="{$error.model}" style="background-color : #FF0000;"{/if} >
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$modellist key=key item=model}
+           			<OPTION value="{$model.id}" {if $model.id==$nodedata.modelid}SELECTED{/if}>{$model.name} ({$model.id})</OPTION>
+				{/foreach}
+			</SELECT>
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Serial:
+        </TD>
+        <TD>
+			<input type="text" name="nodeadd[serial]" id='serial' placeholder="" size="32" {if $error.serial}title="{$error.serial}" style="background-color : #FF0000;"{/if}  value="{$nodedata.serial}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Device ID:
+        </TD>
+        <TD>
+			<input type="text" name="nodeadd[deviceid]" id='deviceid' placeholder="" size="32" title="" value="{$nodedata.deviceid}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Address:
+        </TD>
+        <TD>
+			<input type="text" name="nodeadd[address]" id='address' placeholder="" size="32" title="" value="{$nodedata.address}">
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

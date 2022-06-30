@@ -1,0 +1,29 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=modeladd" method="post">
+<TABLE>
+<THEAD>
+    <TR>
+        <TD width="1%">
+            Model name:
+        </TD>
+        <TD>
+			<input type="text" name="modeladd[name]" id='name' class="name" maxlength="64" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$modeldata.name}">
+        </TD>
+    </TR>
+</THEAD>
+    <TR>
+        <TD>
+            Description:
+        </TD>
+        <TD>
+            <textarea name="modeladd[description]" id="description"  class="description">{$modeldata.description}</textarea>
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

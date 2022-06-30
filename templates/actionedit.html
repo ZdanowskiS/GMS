@@ -1,0 +1,46 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=actionedit" method="post">
+<p style="display: none;">
+<INPUT type="submit" class="hiddenbtn">
+<INPUT type="text" name="actionedit[id]" value="{$actiondata.id}" class="hiddenbtn">
+</p>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>
+            Name:
+        </TD>
+        <TD>
+			<input type="text" name="actionedit[name]" id='class' class="name" maxlength="64" value="{$actiondata.name}">
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            Model:
+        </TD>
+        <TD>
+			<SELECT size="1" name="actionedit[modelid]" {if $error.modelid}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$modellist key=key item=model}
+           			<OPTION value="{$model.id}" {if $model.id==$actiondata.modelid}selected{/if}>{$model.name} ({$model.id})</OPTION>
+				{/foreach}
+			</SELECT>
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Description:
+        </TD>
+        <TD>
+            <textarea name="actionedit[description]" id="description" rows="10" cols="150">{$actiondata.description}</textarea>
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

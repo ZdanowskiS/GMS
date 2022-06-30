@@ -1,0 +1,71 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=customeradd" method="post">
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>
+            Name:
+        </TD>
+        <TD>
+			<input type="text" name="customeradd[name]" id='name' class="name"  maxlength="128" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$customerdata.name}">
+            External ID:<input type="text" name="customeradd[extid]" id='extid' size="16" title="" value="{$customerdata.extid}">
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            Last Name:
+        </TD>
+        <TD>
+			<input type="text" name="customeradd[lastname]" id='lastname' class="name" maxlength="128" {if $error.lastname}title="{$error.lastname}" style="background-color : #FF0000;"{/if} value="{$customerdata.lastname}">
+        </TD>
+    </TR>
+
+    <TR>
+        <TD>
+            Address:
+        </TD>
+        <TD>
+			<input type="text" name="customeradd[address]" id='address' class="name" maxlength="255" value="{$customerdata.address}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Phone:
+        </TD>
+        <TD>
+			<input type="text" name="customeradd[phone]" id='phone' class="phone" maxlength="20" value="{$customerdata.phone}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            SSN:
+        </TD>
+        <TD>
+			<input type="text" name="customeradd[ssn]" id='ssn' class="name" maxlength="50" value="{$customerdata.ssn}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            TEN:
+        </TD>
+        <TD>
+			<input type="text" name="customeradd[ten]" id='ssn' class="name" maxlength="50" value="{$customerdata.ten}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Note:
+        </TD>
+        <TD>
+            <textarea name="customeradd[note]" id="note" class="description">{$customerdata.note}</textarea>
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

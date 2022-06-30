@@ -1,0 +1,29 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=useradd" method="post">
+<TABLE>
+<THEAD>
+    <TR>
+        <TD width="1%">
+            Name:
+        </TD>
+        <TD>
+			<input type="text" name="useradd[login]" id='name' class="login" maxlength="32" {if $error.login}title="{$error.login}" style="background-color : #FF0000;"{/if} value="{$userdata.login}">
+        </TD>
+    </TR>
+</THEAD>
+    <TR>
+        <TD>
+            Password:
+        </TD>
+        <TD>
+			<input type="password" name="useradd[passwd]" id='passwd' class="passwd" {if $error.passwd}title="{$error.passwd}" style="background-color : #FF0000;"{/if} value="{$userdata.login}">
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

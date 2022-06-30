@@ -1,0 +1,120 @@
+DROP SEQUENCE IF EXISTS users_id_seq;
+CREATE SEQUENCE users_id_seq;
+DROP TABLE IF EXISTS users CASCADE;
+CREATE TABLE users (
+	id integer DEFAULT nextval('users_id_seq'::text) NOT NULL,
+	login varchar(32) 	DEFAULT '' NOT NULL,
+	passwd varchar(255) 	DEFAULT '' NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (login)
+);
+
+DROP TABLE IF EXISTS sessions CASCADE;
+CREATE TABLE sessions (
+    id 		varchar(50) 	NOT NULL DEFAULT '',
+    ctime 	integer 	NOT NULL DEFAULT 0,
+    userid      integer         NOT NULL
+		CONSTRAINT session_userid_fkey REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY (id)
+);
+
+DROP SEQUENCE IF EXISTS models_id_seq;
+CREATE SEQUENCE models_id_seq;
+DROP TABLE IF EXISTS models CASCADE;
+CREATE TABLE models (
+	id integer          DEFAULT nextval('models_id_seq'::text) NOT NULL,
+	name varchar(64)	DEFAULT '' NOT NULL,
+	description TEXT	DEFAULT '' NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (name)
+);
+
+DROP SEQUENCE IF EXISTS customers_id_seq;
+CREATE SEQUENCE customers_id_seq;
+DROP TABLE IF EXISTS customers CASCADE;
+CREATE TABLE customers (
+	id integer          DEFAULT nextval('customers_id_seq'::text) NOT NULL,
+    extid varchar(16) DEFAULT '' NOT NULL,
+	lastname varchar(128)	DEFAULT '' NOT NULL,
+	name varchar(128)	DEFAULT '' NOT NULL,
+	address varchar(255)	DEFAULT '' NOT NULL,
+    phone varchar(20) DEFAULT '' NOT NULL,
+	ten varchar(50) 	DEFAULT '' NOT NULL,
+	ssn varchar(50) 	DEFAULT '' NOT NULL,
+	note text		    DEFAULT '' NOT NULL,
+	PRIMARY KEY (id)
+);
+
+DROP SEQUENCE IF EXISTS genieacs_id_seq;
+CREATE SEQUENCE genieacs_id_seq;
+DROP TABLE IF EXISTS genieacs CASCADE;
+CREATE TABLE genieacs (
+	id integer          DEFAULT nextval('genieacs_id_seq'::text) NOT NULL,
+    name varchar(64)	DEFAULT '' NOT NULL,
+    url varchar(32)	DEFAULT '' NOT NULL,
+    passwd varchar(64)	DEFAULT '' NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE (name),
+	UNIQUE (url)
+);
+
+DROP SEQUENCE IF EXISTS nodes_id_seq;
+CREATE SEQUENCE nodes_id_seq;
+DROP TABLE IF EXISTS nodes CASCADE;
+CREATE TABLE nodes (
+	id integer          DEFAULT nextval('nodes_id_seq'::text) NOT NULL,
+    extid integer DEFAULT NULL,
+	name varchar(128)	DEFAULT '' NOT NULL,
+	serial varchar(128)	DEFAULT '' NOT NULL,
+	deviceid varchar(128)	DEFAULT '' NOT NULL,
+	address varchar(255)	DEFAULT '' NOT NULL,
+	customerid integer	NOT NULL
+       REFERENCES customers (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    modelid integer	NOT NULL
+       REFERENCES models (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    genieacsid integer	NOT NULL
+       REFERENCES genieacs (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    PRIMARY KEY (id),
+	UNIQUE (name)
+);
+
+DROP SEQUENCE IF EXISTS actions_id_seq;
+CREATE SEQUENCE actions_id_seq;
+DROP TABLE IF EXISTS actions CASCADE;
+CREATE TABLE actions (
+	id integer          DEFAULT nextval('actions_id_seq'::text) NOT NULL,
+    name varchar(64)	DEFAULT '' NOT NULL,
+	description text	DEFAULT '' NOT NULL,
+    modelid integer	NOT NULL
+       REFERENCES models (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY (id),
+	UNIQUE (name)
+);
+
+DROP SEQUENCE IF EXISTS tasks_id_seq;
+CREATE SEQUENCE tasks_id_seq;
+DROP TABLE IF EXISTS tasks CASCADE;
+CREATE TABLE tasks (
+	id integer          DEFAULT nextval('tasks_id_seq'::text) NOT NULL,
+    name varchar(64)	DEFAULT '' NOT NULL,
+	description varchar(255)	DEFAULT '' NOT NULL,
+	dataName SMALLINT NOT NULL,
+	dataType SMALLINT NOT NULL,
+	objectName text DEFAULT '' NOT NULL,
+    actionid integer NOT NULL
+       REFERENCES actions (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY (id),
+	UNIQUE (name)
+);
+
+DROP SEQUENCE IF EXISTS nodeconfig_id_seq;
+CREATE SEQUENCE nodeconfig_id_seq;
+DROP TABLE IF EXISTS nodeconfig CASCADE;
+CREATE TABLE nodeconfig (
+	id integer          DEFAULT nextval('nodeconfig_id_seq'::text) NOT NULL,
+    name varchar(64)	DEFAULT '' NOT NULL,
+    nodeid integer 
+       REFERENCES nodes (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    val varchar(128)	DEFAULT '' NOT NULL,
+	PRIMARY KEY (id)
+);

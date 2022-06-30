@@ -1,0 +1,96 @@
+{include file="header.html" title=GMS}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD width="1%" scope="col">
+            <B>Name:</B>
+        </TD>
+        <TD width="99%">
+			{$customerinfo.name} {$customerinfo.lastname}
+            {if $customerinfo.extid} External ID{$customerinfo.extid}{/if}
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD scope="col">
+            <B>Address:</B>
+        </TD>
+        <TD scope="col">
+           {$customerinfo.address}
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            SSN:
+        </TD>
+        <TD>
+			{$customerinfo.ssn}
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            TEN:
+        </TD>
+        <TD>
+			{$customerinfo.ten}
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Note:
+        </TD>
+        <TD>
+            {$customerinfo.note}
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+			<a href="?m=customerdel&id={$customerinfo.id}" title="Delete">Delete</a>
+			<a href="?m=customeredit&id={$customerinfo.id}" title="Edit">Edit</a>
+        </TD>
+    </TR>
+</TABLE>
+<BR>
+<TABLE width="100%">
+<THEAD>
+    <TR>
+        <TH align="left" class="head">
+            Nodes:
+        </TH>
+        <TH colspan="3" class="head" align="right">
+			<a href="?m=nodeadd&customerid={$customerinfo.id}" title="Edit">New node</a>
+        </TH>
+    </TR>
+</THEAD>
+	<TR class="head">
+		<TD>Name/<BR>Address:</TD>
+		<TD>Model name:</TD>
+		<TD>Serial/<BR>
+			Device id:</TD>
+		<TD align="right">Actons:</TD>
+	</TR>
+	{foreach from=$nodelist item=node}
+    <TR class="list {cycle values="light,dark"}">
+        <TD >
+           <B>{$node.name}</B><BR>
+           {$node.address}
+        </TD>
+        <TD>
+			 {$node.modelname}
+        </TD>
+        <TD>
+			{$node.serial}<BR>
+			{$node.deviceid}
+        </TD>
+		<TD align="right">
+			<a href="?m=nodeinfo&id={$node.id}" title="Node info">I</a>
+			<a href="?m=nodeedit&id={$node.id}" title="Edit node">E</a>
+			<a href="?m=nodedel&id={$node.id}" title="Delete node">X</a>
+		</TD>
+    </TR>
+	{foreachelse}
+	<TR>
+		<TD colspan="4" align="center">No nodes found in database.</TD>
+	</TR>
+	{/foreach}	
+</TABLE>

@@ -1,0 +1,154 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD style="width: 1%;">
+            Name:
+        </TD>
+        <TD style="width: 99%;">
+			{$nodeinfo.name}
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            <B>Customer:</B>
+        </TD>
+        <TD>
+			<a href="?m=customerinfo&id={$nodeinfo.customerid}">{$nodeinfo.lastname}</a>
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            <B>Model:<B>
+        </TD>
+        <TD>
+			<a href="?m=modelinfo&id={$nodeinfo.modelid}">{$nodeinfo.modelname}</a>
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            <B>Serial:</B>
+        </TD>
+        <TD>
+			{$nodeinfo.serial}
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            <B>Device ID:</B>
+        </TD>
+        <TD>
+			{$nodeinfo.deviceid}
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            <B>Address:</B>
+        </TD>
+        <TD>
+			{$nodeinfo.address}
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2" >
+			<a href="?m=nodedel&id={$nodeinfo.id}" title="Node del"> Delete</a>
+			<a href="?m=nodeedit&id={$nodeinfo.id}" title="Node edit">Edit</a>
+        </TD>
+    </TR>
+</TABLE>
+
+<BR>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD width="1%">
+            Config
+        </TD>
+        <TD  class="head" colspan="4" align="right">
+        </TD>
+    </TR>
+	</THEAD>
+    <TR class="head">
+        <TD>
+            Name/<BR>
+			Object:
+        </TD>
+        <TD>
+			Value:
+        </TD>
+        <TD align="right">
+			Action:
+        </TD>
+    </TR>
+	{foreach from=$nodeconfig item=config}
+    <TR class="list {cycle values="light,dark"}">
+        <TD>
+            {$config.name}
+        </TD>
+        <TD>
+            {$config.val}
+        </TD>
+		<TD align="right">
+			<a href="?m=nodeconfigedit&id={$config.id}" title="Edit config">E</a>
+			<a href="?m=nodeconfigdel&id={$config.id}" title="Delete config">X</a>
+		</TD>
+    </TR>
+	{foreachelse}
+    <TR>
+        <TD colspan="3">No configuration found in database.</TD>
+    </TR>
+	{/foreach}
+	<form action="?m=nodeconfigadd&amp;nodeid={$nodeinfo.id}" method="post">
+    <TR>
+        <TD colspan="5" class="lfoot">
+			<p style="display: none;">
+				<INPUT type="submit" class="hiddenbtn">
+				<INPUT type="text" name="configadd[nodeid]" value="{$nodeinfo.id}" class="hiddenbtn">
+			</p>
+			Name:<SELECT size="1" name="configadd[name]">
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$tasklist key=key item=action}
+           			<OPTION value="{$action.name}" {if $model.id==$actiondata.modelid}SELECTED{/if}>{$action.name}</OPTION>
+				{/foreach}
+			</SELECT>
+			<BR>
+			Value:<input type="text" name="configadd[val]" size="32" title="" value="{$config.val}">
+			<input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+	</form>
+</TABLE>
+<BR>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD width="1%">
+            Action
+        </TD>
+        <TD  class="head" align="right">
+        </TD>
+    </TR>
+	</THEAD>
+    <TR class="head">
+        <TD>
+            Name<BR>
+        </TD>
+        <TD align="right">
+			Action:
+        </TD>
+    </TR>
+	{foreach from=$actionlist item=action}
+    <TR class="list {cycle values="light,dark"}">
+        <TD>
+            <a href="?m=actioninfo&amp;id={$action.id}" title="Action info">{$action.name}
+        </TD>
+        <TD align="right">
+			<a href="?m=actionrun&amp;actionid={$action.id}&amp;nodeid={$nodeinfo.id}" title="Run action">R</a>
+        </TD>
+	</TR>
+	{foreachelse}
+    <TR>
+        <TD colspan="2">No actionss found in database.</TD>
+    </TR>
+	{/foreach}

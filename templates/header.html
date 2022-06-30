@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<TITLE>{$title} - {$Name}</TITLE>
+</HEAD>
+<style>
+thead {
+	background:#CCCCCC;
+	border-bottom: 1px solid;
+	font-weight: bold;
+}
+
+table, th, td {
+  border: 1px solid;
+    border-collapse: collapse;
+	
+	white-space: nowrap;
+	padding: 5px;
+
+}
+tr.list:hover td {
+  
+        background-color: rgb(170,170,170);
+        font-size: 100%;
+        border: 0;
+      }
+
+tr.light {
+        background-color: rgb(200,200,200);
+      }
+
+tr.dark {
+        background-color: rgb(190,190,190);
+      }
+
+
+td,th{
+  border: 0px solid;
+    border-collapse: collapse;
+    vertical-align: top;
+}
+
+tr.head{
+	border: 0px solid;
+	border-bottom: 1px solid;
+    border-collapse: collapse;
+    vertical-align: top;
+	background:#CCDDDD;
+	font-weight: bold;
+	font-size: 12;
+}
+
+tr.foot{
+	border: 0px solid;
+	border-top: 1px solid;
+	border-collapse: collapse;
+    vertical-align: top;
+	text-align: right;
+}
+
+td.lfoot{
+	border: 0px solid;
+	border-top: 1px solid;
+	border-collapse: collapse;
+    vertical-align: top;
+	text-align: left;
+}
+
+table.hide, th.hide, td.hide {
+  border: 0px solid;
+    border-collapse: collapse;
+    vertical-align: top;
+}
+
+div.menu {
+  font-size: 12;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100px;
+}
+
+div.content {
+  position: absolute;
+
+  left: 100px;
+  min-width: 50%;
+}
+div.tag {
+    float:left; 
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+table {
+  width: 100%;
+}
+
+input.name {
+	width: 24em;
+}
+
+input.passwd {
+	width: 16em;
+}
+
+input.phone {
+	width: 20em;
+}
+
+textarea.description {
+    height: 5em;
+    width: 50em;
+}
+</style>
+<BODY bgcolor="#DDDDDD">
+
+<div class="menu">
+<div>---</div>
+<div><a href="?m=useradd">New User</a></div>
+<div><a href="?m=userlist">User List</a></div>
+<div>---</div>
+<div><a href="?m=genieacsadd">New Genieacs</a></div>
+<div><a href="?m=genieacslist">Genieacs List</a></div>
+<div>---</div>
+<div><a href="?m=modeladd">New Model</a></div>
+<div><a href="?m=modellist">Model List</a></div>
+<div><a href="?m=actionadd">New Action</a></div>
+<div><a href="?m=actionlist">Action List</a></div>
+<div>---</div>
+<div><a href="?m=customeradd">New Customer</a></div>
+<div><a href="?m=customerlist">Customer List</a></div>
+<div>---</div>
+<div><a href="?m=nodelist">Node List</a></div>
+<div>---</div>
+<div><a href="?m=logout">Logout</a></div>
+</div>
+<div class="content">
+<h2>{$title} - {$Name}</h2>

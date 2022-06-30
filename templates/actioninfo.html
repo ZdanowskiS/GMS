@@ -1,0 +1,113 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD width="1%">
+            Name:
+        </TD>
+        <TD>
+			{$actioninfo.name}
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            <B>Model:</B>
+        </TD>
+        <TD>
+			<a href="?m=modelinfo&id={$actioninfo.modelid}" title="Action Edit">{$actioninfo.modelname}</a>
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            <B>Description:</B>
+        </TD>
+        <TD>
+            {$actioninfo.description}
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+           <a href="?m=actiondel&id={$actioninfo.id}" title="Delete action"> Delete</a>
+			<a href="?m=actionedit&id={$actioninfo.id}" title="Action Edit">Edit</a>
+        </TD>
+    </TR>
+</TABLE>
+<BR>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TH align="left" width="1%">
+            Tasks
+        </TH>
+        <TH  class="head" colspan="4" align="right">
+        </TH>
+    </TR>
+	</THEAD>
+    <TR class="head">
+        <TD>
+            Name:
+        </TD>
+        <TD>
+			Data name:
+        </TD>
+        <TD>
+			Data type:
+        </TD>
+        <TD>
+			Object name:
+        </TD>
+        <TD>
+			Action:
+        </TD>
+    </TR>
+	{foreach from=$tasklist item=task}
+    <TR class="list {cycle values="light,dark"}">
+        <TD>
+            {$task.name}
+        </TD>
+        <TD>
+            {$_DATANAME[$task.dataname]}
+        </TD>
+        <TD>
+            {$_DATATYPE[$task.datatype]}
+        </TD>
+        <TD>
+            {$task.objectname}
+        </TD>
+		<TD>
+			<a href="?m=taskdel&id={$task.id}" title="Delete task">X</a>
+		</TD>
+    </TR>
+	{/foreach}
+	<form action="?m=taskadd&amp;actionid={$actioninfo.id}" method="post">
+    <TR>
+        <TD colspan="5" align="left" class="lfoot">
+			<p style="display: none;">
+				<INPUT type="submit" class="hiddenbtn">
+				<INPUT type="text" name="taskadd[actionid]" value="{$actioninfo.id}" class="hiddenbtn">
+			</p>
+			Name:<input type="text" name="taskadd[name]" value="{$taskdata.name}" size="16" maxlength="64" placeholder="MyName">
+
+			Data Name:<SELECT size="1" name="taskadd[dataname]" {if $error.dataname}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$_DATANAME key=key item=name}
+           			<OPTION value="{$key}" {if $model.id==$actiondata.modelid}SELECTED{/if}>{$name}</OPTION>
+				{/foreach}
+			</SELECT>
+
+			Data Type:<SELECT size="1" name="taskadd[datatype]" {if $error.dataname}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$_DATATYPE key=key item=name}
+           			<OPTION value="{$key}" {if $model.id==$actiondata.modelid}SELECTED{/if}>{$name}</OPTION>
+				{/foreach}
+			</SELECT>
+			<BR>
+			Object name:<input type="text" name="taskadd[objectname]" size="32" placeholder="InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnectionNumberOfEntries" title="" value="{$taskdata.objectname}">
+			<BR>
+			Description:<input type="text" name="taskadd[description]" size="32" title="" value="{$taskdata.description}">
+<input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+	</form>
+</TABLE>

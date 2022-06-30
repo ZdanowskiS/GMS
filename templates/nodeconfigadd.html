@@ -1,0 +1,42 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=nodeconfigadd" method="post">
+<TABLE>
+<THEAD>
+    <TR>
+        <TD width="1%">
+            Name:
+        </TD>
+        <TD>
+			<input type="text" name="nodeconfigadd[name]" id='class' size="32" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$configdata.name}">
+        </TD>
+    </TR>
+</THEAD>
+    <TR>
+        <TD>
+            Value:
+        </TD>
+        <TD>
+            <input type="text" name="nodeconfigadd[val]" size="32" title="" value="{$configdata.val}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Node:
+        </TD>
+        <TD>
+			<SELECT size="1" name="nodeconfigadd[nodeid]" {if $error.modelid}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$nodelist key=key item=node}
+           			<OPTION value="{$node.id}" {if $model.id==$actiondata.modelid}SELECTED{/if}>{$node.name} ({$node.id})</OPTION>
+				{/foreach}
+			</SELECT>
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

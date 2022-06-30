@@ -1,0 +1,71 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD width="1%">
+            Name:
+        </TD>
+		<TD>
+			{$modelinfo.name}
+		</TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            <B>Description:</B>
+        </TD>
+        <TD>
+           {$modelinfo.description}
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2" >
+			<a href="?m=modeldel&id={$modelinfo.id}" title="Delete model">Delete</a>
+			<a href="?m=modeledit&id={$modelinfo.id}" title="Edit model">Edit</a>
+        </TD>
+    </TR>
+</TABLE>
+<BR>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD width="1%">
+            Actions
+        </TD>
+        <TD colspan="2" align="right">
+			<a href="?m=actionadd&modelid={$modelinfo.id}" title="New model">New action</a>
+        </TD>
+    </TR>
+	</THEAD>
+    <TR class="head">
+        <TD>
+            <B>Name:</B>
+        </TD>
+        <TD>
+			<B>Description:</B>
+        </TD>
+        <TD>
+			<B>Action:</B>
+        </TD>
+    </TR>
+	{foreach from=$actionlist item=action}
+    <TR>
+        <TD>
+            <a href="?m=actioninfo&id={$action.id}">{$action.name}</a>
+        </TD>
+        <TD>
+            {$action.description}
+        </TD>
+        <TD>
+			<a href="?m=actioninfo&id={$action.id}" title="Action info">I</a>
+			<a href="?m=actionedit&id={$action.id}" title="Edit action">E</a>
+			<a href="?m=actiondel&id={$action.id}" title="Delete action">X</a>
+        </TD>
+    </TR>
+	{/foreach}
+    <TR>
+        <TD colspan="3" class="foot">
+
+        </TD>
+    </TR>
+</TABLE>

@@ -1,0 +1,37 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=genieacsadd" method="post">
+<TABLE>
+<THEAD>
+    <TR>
+        <TD width="1%">
+           GenieACS name:
+        </TD>
+        <TD>
+			<input type="text" name="genieacsadd[name]" class="name" maxlength="64" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.name}">
+        </TD>
+    </TR>
+</THEAD>
+    <TR>
+        <TD width="1%">
+           Ip addr:
+        </TD>
+        <TD>
+			<input type="text" name="genieacsadd[url]" class="name" maxlength="32" placeholder="http://127.0.0.1:7557/" {if $error.name}title="{$error.ipaddr}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.ipaddr}">
+        </TD>
+    </TR>
+    <TR>
+        <TD width="1%">
+           Password:
+        </TD>
+        <TD>
+			<input type="text" name="genieacsadd[passwd]" class="passwd" maxlength="64" {if $error.name}title="{$error.passwd}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.passwd}">
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

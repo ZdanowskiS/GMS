@@ -1,0 +1,20 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>Name</TD><TD align="right">Action</TH>
+    </TR>
+	</THEAD>
+	{foreach from=$userlist item=user}
+    <TR class="list {cycle values="light,dark"}">
+        <TD><a href="?m=userinfo&id={$user.id}">{$user.login}</a></TD>
+        <TD align="right">
+			<a href="?m=userdel&id={$user.id}" title="Delete user">X</a>
+		</TD>
+    </TR>
+	{foreachelse}
+    <TR>
+        <TD colspan="2">No user found in database.</TD>
+    </TR>
+	{/foreach}
+</TABLE>

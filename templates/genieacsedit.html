@@ -1,0 +1,41 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=genieacsedit&amp;id={$genieacsdata.id}" method="post">
+<p style="display: none;">
+<INPUT type="submit" class="hiddenbtn">
+<INPUT type="text" name="genieacsedit[id]" value="{$genieacsdata.id}" class="hiddenbtn">
+</p>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>
+            Name:
+        </TD>
+        <TD>
+			<input type="text" name="genieacsedit[name]" class="name" maxlength="64" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.name}">
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            URL:
+        </TD>
+        <TD>
+			<input type="text" name="genieacsedit[url]" class="name" maxlength="32" {if $error.ipaddr}title="{$error.url}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.url}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Password:
+        </TD>
+        <TD>
+			<input type="text" name="genieacsedit[passwd]" class="passwd" maxlength="64" {if $error.passwd}title="{$error.passwd}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.passwd}">
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

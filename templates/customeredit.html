@@ -1,0 +1,67 @@
+{include file="header.html" title="GMS"}
+
+<form action="?m=customeredit" method="post">
+			<p style="display: none;">
+				<INPUT type="submit" class="hiddenbtn">
+				<INPUT type="text" name="customeredit[id]" value="{$customerdata.id}" class="hiddenbtn">
+			</p>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>
+            Name:
+        </TD>
+        <TD>
+			<input type="text" name="customeredit[name]" id='name' placeholder="" size="32" 
+{if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$customerdata.name}">
+            External ID:<input type="text" name="customeredit[extid]" id='extid' size="16" title="" value="{$customerdata.extid}">
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            Last Name:
+        </TD>
+        <TD>
+			<input type="text" name="customeredit[lastname]" id='lastname' placeholder="" size="32" title="" value="{$customerdata.lastname}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Address:
+        </TD>
+        <TD>
+			<input type="text" name="customeredit[address]" id='address' placeholder="" size="32" title="" value="{$customerdata.address}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            SSN:
+        </TD>
+        <TD>
+			<input type="text" name="customeredit[ssn]" id='ssn' placeholder="" size="32" title="" value="{$customerdata.ssn}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            TEN:
+        </TD>
+        <TD>
+			<input type="text" name="customeredit[ten]" id='ssn' placeholder="" size="32" title="" value="{$customerdata.ten}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Note:
+        </TD>
+        <TD>
+            <textarea name="actionadd[note]" id="note" rows="10" cols="150">{$customerdata.note}</textarea>
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

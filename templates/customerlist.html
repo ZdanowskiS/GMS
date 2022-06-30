@@ -1,0 +1,18 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>Name</TD><TD align="right">Action</TD>
+    </TR>
+	</THEAD>
+	{foreach from=$customerlist item=customer}
+    <TR class="list {cycle values="light,dark"}">
+        <TD><a href="?m=customerinfo&id={$customer.id}" title="Edit file">{$customer.name} {$customer.lastname}</a></TD>
+        <TD align="right">
+			<a href="?m=customerinfo&id={$customer.id}" title="Customer info">I</a>
+			<a href="?m=customeredit&id={$customer.id}" title="Edit model">E</a>
+			<a href="?m=customerdel&id={$customer.id}" title="Delete customer">X</a>
+		</TD>
+    </TR>
+	{/foreach}
+</TABLE>

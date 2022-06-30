@@ -1,0 +1,35 @@
+{include file="header.html" title="GMS"}
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD width="1%">
+            Name:
+        </TD>
+		<TD>
+			{$genieacsinfo.name}
+		</TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            <B>URL:</B>
+        </TD>
+        <TD>
+           {$genieacsinfo.url}
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            <B>Password:</B>
+        </TD>
+        <TD>
+           {$genieacsinfo.passwd}
+        </TD>
+    </TR>
+    <TR class="foot">
+        <TD colspan="2" >
+			<a href="?m=genieacsdel&id={$genieacsinfo.id}" title="Delete GenieACS">Delete</a>
+			<a href="?m=genieacsedit&id={$genieacsinfo.id}" title="GenieACS edit">Edit</a>
+        </TD>
+    </TR>
+</TABLE>
