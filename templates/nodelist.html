@@ -2,7 +2,7 @@
 <TABLE>
 	<THEAD>
     <TR>
-        <TD>Name</TD><TD>Serial</TD><TD>Device ID</TD><TD>Action</TH>
+        <TD>Name</TD><TD>Serial</TD><TD>Device ID</TD><TD align="right">Action</TH>
     </TR>
 	</THEAD>
 	{foreach from=$nodelist item=node}
@@ -10,7 +10,7 @@
         <TD><a href="?m=nodeinfo&id={$node.id}">{$node.name}</a></TD>
         <TD>{$node.serial}</TD>
         <TD>{$node.deviceid}</TD>
-        <TD align="center">
+        <TD align="right">
 			<a href="?m=nodeinfo&id={$node.id}" title="Node info">I</a>
 			<a href="?m=nodeedit&id={$node.id}" title="Edit node">E</a>
 			<a href="?m=nodedel&id={$node.id}" title="Delete node">X</a>
@@ -18,7 +18,7 @@
     </TR>
 	{foreachelse}
     <TR>
-        <TD colspan="2">No nodes found in database.</TD>
+        <TD colspan="4" align="center">No nodes found in database.</TD>
     </TR>
 	{/foreach}
 </TABLE>

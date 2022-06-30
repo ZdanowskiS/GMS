@@ -44,7 +44,7 @@
         <TD>
 			<B>Description:</B>
         </TD>
-        <TD>
+        <TD align="right">
 			<B>Action:</B>
         </TD>
     </TR>
@@ -56,12 +56,16 @@
         <TD>
             {$action.description}
         </TD>
-        <TD>
+        <TD align="right">
 			<a href="?m=actioninfo&id={$action.id}" title="Action info">I</a>
 			<a href="?m=actionedit&id={$action.id}" title="Edit action">E</a>
 			<a href="?m=actiondel&id={$action.id}" title="Delete action">X</a>
         </TD>
     </TR>
+	{foreachelse}
+	<TR>
+        <TD colspan="3" align="center">No action found in database.</TD>
+	</TR>
 	{/foreach}
     <TR>
         <TD colspan="3" class="foot">

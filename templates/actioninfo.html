@@ -75,7 +75,7 @@
         <TD>
             {$task.objectname}
         </TD>
-		<TD>
+		<TD align="right">
 			<a href="?m=taskdel&id={$task.id}" title="Delete task">X</a>
 		</TD>
     </TR>
@@ -92,14 +92,14 @@
 			Data Name:<SELECT size="1" name="taskadd[dataname]" {if $error.dataname}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
 				<OPTION VALUE="0">Select</OPTION>
 				{foreach from=$_DATANAME key=key item=name}
-           			<OPTION value="{$key}" {if $model.id==$actiondata.modelid}SELECTED{/if}>{$name}</OPTION>
+           			<OPTION value="{$key}" {if $key==$actiondata.dataname}SELECTED{/if}>{$name}</OPTION>
 				{/foreach}
 			</SELECT>
 
 			Data Type:<SELECT size="1" name="taskadd[datatype]" {if $error.dataname}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
 				<OPTION VALUE="0">Select</OPTION>
 				{foreach from=$_DATATYPE key=key item=name}
-           			<OPTION value="{$key}" {if $model.id==$actiondata.modelid}SELECTED{/if}>{$name}</OPTION>
+           			<OPTION value="{$key}" {if $key==$actiondata.datatype}SELECTED{/if}>{$name}</OPTION>
 				{/foreach}
 			</SELECT>
 			<BR>
