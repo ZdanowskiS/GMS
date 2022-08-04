@@ -1,7 +1,10 @@
 # GMS
 Genie Managment System
 
-GMS works with PostgreSQL database. It allows storing some customer data and CPE configuration.
+GMS is based on LMS architecture and is addressed for LMS users.
+
+Working with PostgreSQL database. It allows storing some customer data and CPE configuration.
+Therfore GMS can be used on its own without LMS. At the same time it is not meant to replace Lan Management System or any similar solution.
 
 # Installation
 1. Configure Apache2 virtual host.
