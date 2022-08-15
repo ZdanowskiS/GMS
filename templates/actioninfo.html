@@ -1,4 +1,42 @@
 {include file="header.html" title="GMS"}
+<script>
+window.onload = function() {
+
+    var name = document.getElementById("name");
+    name.addEventListener("keyup",function(e){
+        const xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "?m=action_ajax&action=getname&text="+encodeURIComponent(name.value)+"&modelid="+encodeURIComponent({$actioninfo.modelid})+"&actionid="+encodeURIComponent({$actioninfo.id}));
+
+        xhttp.onload = function() {
+            document.getElementById("namelist").innerHTML =
+                this.responseText;
+        }
+        xhttp.send();
+    },false);
+
+    name.addEventListener("focusout",function(e){
+        const xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "?m=action_ajax&action=getsetting&text="+encodeURIComponent(name.value)+"&modelid="+encodeURIComponent({$actioninfo.modelid})+"&actionid="+encodeURIComponent({$actioninfo.id}));
+
+        xhttp.onload = function() {
+            
+            var obj = JSON.parse(this.responseText)
+            if (obj === null) {
+                return "null";
+            }
+
+            document.getElementById("dataname").value=obj.dataname;
+            document.getElementById("datatype").value=obj.datatype;
+            document.getElementById("objectname").value=obj.objectname;
+            document.getElementById("defval").value=obj.defval;
+            document.getElementById("description").value=obj.description;
+        }
+        xhttp.send();
+    },false);
+
+}
+</script>
+
 <TABLE>
 	<THEAD>
     <TR>
@@ -55,7 +93,8 @@
 			Data type:
         </TD>
         <TD>
-			Object name:
+			Object name:<BR>
+            Default val:
         </TD>
         <TD>
 			Action:
@@ -73,7 +112,8 @@
             {$_DATATYPE[$task.datatype]}
         </TD>
         <TD>
-            {$task.objectname}
+            {$task.objectname}<BR>
+            {$task.defval}
         </TD>
 		<TD align="right">
 			<a href="?m=taskdel&id={$task.id}" title="Delete task">X</a>
@@ -87,25 +127,27 @@
 				<INPUT type="submit" class="hiddenbtn">
 				<INPUT type="text" name="taskadd[actionid]" value="{$actioninfo.id}" class="hiddenbtn">
 			</p>
-			Name:<input type="text" name="taskadd[name]" value="{$taskdata.name}" size="16" maxlength="64" placeholder="MyName">
-
-			Data Name:<SELECT size="1" name="taskadd[dataname]" {if $error.dataname}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
+			Name:<input type="text" id="name" name="taskadd[name]" value="{$taskdata.name}" list="namelist size="16" maxlength="64" placeholder="MyName">
+                <datalist id ="namelist"></datalist>
+			Data Name:<SELECT size="1" id="dataname" name="taskadd[dataname]" {if $error.dataname}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
 				<OPTION VALUE="0">Select</OPTION>
 				{foreach from=$_DATANAME key=key item=name}
            			<OPTION value="{$key}" {if $key==$actiondata.dataname}SELECTED{/if}>{$name}</OPTION>
 				{/foreach}
 			</SELECT>
 
-			Data Type:<SELECT size="1" name="taskadd[datatype]" {if $error.dataname}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
+			Data Type:<SELECT size="1" id="datatype" name="taskadd[datatype]" {if $error.dataname}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
 				<OPTION VALUE="0">Select</OPTION>
 				{foreach from=$_DATATYPE key=key item=name}
            			<OPTION value="{$key}" {if $key==$actiondata.datatype}SELECTED{/if}>{$name}</OPTION>
 				{/foreach}
 			</SELECT>
 			<BR>
-			Object name:<input type="text" name="taskadd[objectname]" size="32" placeholder="InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnectionNumberOfEntries" title="" value="{$taskdata.objectname}">
+			Object name:<input type="text" id="objectname" name="taskadd[objectname]" size="32" placeholder="InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnectionNumberOfEntries" title="" value="{$taskdata.objectname}">
+            <BR>
+			Default value:<input type="text" id="defval" name="taskadd[defval]" {if $error.defval}title="{$error.defval}" style="background-color : #FF0000;"{/if} >
 			<BR>
-			Description:<input type="text" name="taskadd[description]" size="32" title="" value="{$taskdata.description}">
+			Description:<input type="text" id="description" name="taskadd[description]" size="32" title="" value="{$taskdata.description}">
 <input type="submit" value="Save" name="submit">
         </TD>
     </TR>

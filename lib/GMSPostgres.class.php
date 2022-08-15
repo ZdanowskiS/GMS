@@ -22,7 +22,7 @@ class GMSPostgres {
 	{
        $data = implode(' ', array(
             ($host != '' ? 'host=' . $host : ''),
-            ($port != '' ? 'port=' . $port : ''),
+            (isset($port) ? 'port=' . $port : ''),
             ($user != '' ? 'user=' . $user : ''),
             ($passwd != '' ? 'password=' . $passwd : ''),
             ($name != '' ? 'dbname=' . $name : ''),

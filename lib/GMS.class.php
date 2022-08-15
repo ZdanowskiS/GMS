@@ -101,6 +101,11 @@ class GMS {
 		return $result;
 	}
 
+    public function getModelByName(string $name)
+    {
+        return $this->db->GetOne('SELECT id FROM models WHERE name LIKE \''.$name.'\'');
+    }
+
 	public function getModelActions(int $id)
 	{
 		$result= $this->db->getAll('SELECT id, name, description FROM actions WHERE modelid=?',
@@ -149,11 +154,19 @@ class GMS {
 
 	public function existsActionId(int $id)
 	{
-		if($this->GetOne('SELECT 1 FROM actions WHERE id=?',array($id)))
+		if($this->db->GetOne('SELECT 1 FROM actions WHERE id=?',array($id)))
 			return TRUE;
 		else
 			return FALSE;
 	}
+
+    public function existsModelActionName(int $modelid, string $name)
+    {
+		if($this->db->GetOne('SELECT 1 FROM actions WHERE modelid=? AND name LIKE \''.$name.'\'',array($modelid)))
+			return TRUE;
+		else
+			return FALSE;
+    }
 
 	public function getActionList()
 	{
@@ -211,7 +224,7 @@ class GMS {
 
 	public function getActionTasks(int $id)
 	{
-		return $this->db->getAll('SELECT t.id, t.name, t.description, t.dataName, t.dataType, t.objectName,
+		return $this->db->getAll('SELECT t.id, t.name, t.defval, t.description, t.dataName, t.dataType, t.objectName,
 									t.actionid
 									FROM tasks t WHERE t.actionid=?',array($id));
 	}
@@ -260,9 +273,10 @@ class GMS {
 
 	public function addTask(array $data)
 	{
-		$this->db->Execute('INSERT INTO tasks(name, description, dataName, dataType, objectName, actionid) 
-							values(?, ?, ?, ?, ?, ?)',
+		$this->db->Execute('INSERT INTO tasks(name, defval, description, dataName, dataType, objectName, actionid) 
+							values(?, ?, ?, ?, ?, ?, ?)',
 							array($data['name'],
+                                    $data['defval'],
 									$data['description'],
 									$data['dataname'],
 									$data['datatype'],
@@ -274,9 +288,10 @@ class GMS {
 
 	public function updateTask(array $data)
 	{
-		$this->db->Execute('UPDATE tasks SET name=?, description=?, dataName=?, dataType=?, objectName=?, actionid=? 
+		$this->db->Execute('UPDATE tasks SET name=?, defval=? description=?, dataName=?, dataType=?, objectName=?, actionid=? 
 							WHERE id=?',
 							array($data['name'],
+                                    $data['defval'],
 									$data['description'],
 									$data['dataname'],
 									$data['datatype'],
@@ -293,7 +308,6 @@ class GMS {
 		return;
 	}
 //node
-
 	public function existsNodeId(int $id)
 	{
 		if($this->db->GetOne('SELECT 1 FROM nodes WHERE id=?',array($id)))
@@ -315,10 +329,12 @@ class GMS {
 	{
 		$result = $this->db->getRow('SELECT n.id, n.name, n.serial, n.deviceid, n.address, n.customerid, n.modelid, n.genieacsid,
 										c.id as customerid, c.lastname, 
-										m.id as modelid, m.name as modelname
+										m.id as modelid, m.name as modelname,
+                                        g.name as genieacsname
 									FROM nodes n
 										JOIN customers c ON (c.id=n.customerid)
-										JOIN models m ON (m.id=n.modelid)		
+										JOIN models m ON (m.id=n.modelid)
+                                        JOIN genieacs g ON (g.id=n.genieacsid)	
 									WHERE n.id=?',
 									array($id));
 
@@ -381,8 +397,6 @@ class GMS {
 		return;
 	}
 
-//node
-
 	public function existsNodeConfigId(int $id)
 	{
 		if($this->db->GetOne('SELECT 1 FROM nodeconfig WHERE id=?',array($id)))
@@ -402,7 +416,7 @@ class GMS {
 
 	public function getNodeConfig(int $id)
 	{
-		$result = $this->db->getRow('SELECT nc.id, nc.name, nc.nodeid, nc.val
+		$result = $this->db->getRow('SELECT nc.id, nc.name, nc.nodeid, nc.val, nc.datefrom, nc.dateto 
 									FROM nodeconfig nc
 										JOIN nodes n ON (n.id=nc.nodeid)
 										JOIN models m ON (m.id=n.modelid)		
@@ -413,7 +427,7 @@ class GMS {
 
 	public function getNodeConfigList(int $id)
 	{
-		$result = $this->db->getAll('SELECT nc.id, nc.name, nc.nodeid, nc.val
+		$result = $this->db->getAll('SELECT nc.id, nc.name, nc.nodeid, nc.val, nc.datefrom, nc.dateto 
 									FROM nodeconfig nc
 										JOIN nodes n ON (n.id=nc.nodeid)
 										JOIN models m ON (m.id=n.modelid)		
@@ -424,22 +438,26 @@ class GMS {
 
 	public function addNodeConfig(array $data)
 	{
-		$this->db->Execute('INSERT INTO nodeconfig(name, nodeid, val) 
-								VALUES(?, ?, ?)',
+		$this->db->Execute('INSERT INTO nodeconfig(name, nodeid, val, datefrom, dateto) 
+								VALUES(?, ?, ?, ?, ?)',
 							array($data['name'],
 									$data['nodeid'],
-									$data['val']));
+									$data['val'],
+									$data['datefrom'],
+									$data['dateto']));
 
 		return $this->db->getLastInsertId('nodeconfig');
 	}
 
 	public function updateNodeConfig(array $data)
 	{
-		$this->db->Execute('UPDATE nodeconfig SET name=?, nodeid=?, val=?
+		$this->db->Execute('UPDATE nodeconfig SET name=?, nodeid=?, val=?, datefrom=?, dateto=? 
 								WHERE id=?',
 							array($data['name'],
 									$data['nodeid'],
 									$data['val'],
+									$data['datefrom'],
+									$data['dateto'],
 									$data['id']));
 		return;
 	}
@@ -454,10 +472,20 @@ class GMS {
 //GenieACS
 	public function existsGenieacsId(int $id)
 	{
-		if($this->GetOne('SELECT 1 FROM genieacs WHERE id=?',array($id)))
+		if($this->db->GetOne('SELECT 1 FROM genieacs WHERE id=?',array($id)))
 			return TRUE;
 		else
 			return FALSE;
+	}
+
+	public function getGenieacsByName(string $name)
+	{
+		return $this->db->GetOne('SELECT id FROM genieacs WHERE name LIKE \''.$name.'\'');
+	}
+
+	public function getGenieacsByUrl(string $url)
+	{
+		return $this->db->GetOne('SELECT id FROM genieacs WHERE url LIKE \''.$url.'\'');
 	}
 
 	public function getGenieacsList()
@@ -519,9 +547,7 @@ class GMS {
 
         $genieacs=$this->getGenieacs($node['genieacsid']);
 
-		#$deviceid=$node['deviceid'];
-
-		if($parameters)foreach($parameters as $key => $param)
+		if(is_array($parameters))foreach($parameters as $key => $param)
 		{
 			$param_array[$key][]=$param['objectname'];
 			$param_array[$key][]=$param['value'];
@@ -562,9 +588,14 @@ class GMS {
 //
 	public function parseTask($name, $nodeid)
 	{
-		$result=$this->db->GetRow('SELECT val FROM nodeconfig WHERE nodeid=? AND name=?',
+        $date=time();
+		$result=$this->db->GetRow('SELECT val FROM nodeconfig WHERE nodeid=? AND name=? 
+                                    AND (datefrom=0 OR datefrom<?) 
+                                    AND (dateto=0 OR dateto>?)',
 									array($nodeid, 
-                                            $name));
+                                            $name,
+                                            $date,
+                                            $date));
 
 		return $result['val'];
 	}
@@ -577,16 +608,15 @@ class GMS {
 
 		if(is_array($tasks))foreach($tasks as $task)
 		{
+            $val=$this->parseTask($task['name'], $nodeid);
 			$result[]=array('name' => $task['name'],
                         'datatype' => $DATATYPE[1],
                         'objectname' => $task['objectname'],
-                        'value' => $this->parseTask($task['name'], $nodeid));
+                        'value' => ($val ? $val : $task['defval']));
 		}
 
         return $result;
     }
-
-
 //////
 //user
 	public function existsUserId(int $id)
@@ -659,15 +689,20 @@ class GMS {
 
 	public function addSession($userid)
 	{
-		$id=time();
+        $ctime=time();
+		$id=$userid.time();
+
 		$this->db->Execute('INSERT INTO sessions(id,ctime,userid)
-								VALUES(?, ?, ?)',array($id, $id,$userid));
+								VALUES(?, ?, ?)',array($id, $ctime, $userid));
+
 		return $id;
 	}
 
 	public function isLoged()
 	{
-		$session=$this->db->getRow('SELECT id, ctime, userid FROM sessions WHERE id=?',array($_COOKIE['SID']));
+        $id=$_COOKIE['SID'];
+
+		$session=$this->db->getRow('SELECT id, ctime, userid FROM sessions WHERE id=?',array($id));
 		return $session['id'];
 	}
 

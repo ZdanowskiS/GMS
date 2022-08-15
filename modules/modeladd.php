@@ -6,6 +6,8 @@ if($modeldata)
 {
 	if(!$modeldata['name'])
 		$error['name']='Name is required!';
+    elseif($GMS->getModelByName($modeldata['name']))
+		$error['name']='Name exists!';
 
 	if(!$error)
 	{

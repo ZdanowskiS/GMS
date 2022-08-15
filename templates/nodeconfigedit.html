@@ -1,0 +1,54 @@
+{include file="header.html" title="GMS"}
+<form action="?m=nodeconfigedit" method="post">
+			<p style="display: none;">
+				<INPUT type="submit" class="hiddenbtn">
+				<INPUT type="text" name="configedit[id]" value="{$configdata.id}" class="hiddenbtn">
+				<INPUT type="text" name="configedit[nodeid]" value="{$configdata.nodeid}" class="hiddenbtn">
+			</p>
+<TABLE>
+	<THEAD>
+    <TR>
+        <TD>
+            Name:
+        </TD>
+        <TD>
+			<SELECT size="1" name="configedit[name]">
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$nodeconfig key=key item=action}
+           			<OPTION value="{$action.name}" {if $action.name==$configdata.name}SELECTED{/if}>{$action.name}</OPTION>
+				{/foreach}
+			</SELECT>
+        </TD>
+    </TR>
+	</THEAD>
+    <TR>
+        <TD>
+            From date:
+        </TD>
+        <TD>
+             <input type="text" name="configedit[datefrom]" size="10" title="" value="{$configdata.datefrom|date_format:"%Y/%m/%d"}" placeholder="YYYY/MM/DD">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Date to: 
+        </TD>
+        <TD>
+            <input type="text" name="configedit[dateto]" size="10" title="" value="{$configdata.dateto|date_format:"%Y/%m/%d"}" placeholder="YYYY/MM/DD">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Value:
+        </TD>
+        <TD>
+            <input type="text" name="configedit[val]" size="32" title="" value="{$configdata.val}">
+        </TD>
+    </TR>
+    <TR>
+        <TD colspan="2">
+            <input type="submit" value="Save" name="submit">
+        </TD>
+    </TR>
+</TABLE>
+</form>

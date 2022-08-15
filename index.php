@@ -24,11 +24,7 @@ $CONFIG_FILE ='config.ini';
 define('CONFIG_FILE', $CONFIG_FILE);
 
 $CONFIG = (array) parse_ini_file(CONFIG_FILE, true);
-
-$route=parseURI();
-
-if(file_exists('smarty/libs/Smarty.class.php'))
-{
+//
 	require 'smarty/libs/Smarty.class.php';
 	$smarty = new Smarty;
 
@@ -42,8 +38,17 @@ if(file_exists('smarty/libs/Smarty.class.php'))
 	$psql=new GMSPostgres();
 
 	$GMS=new GMS($psql,$API);
+//
+$route=parseURI();
 
+if ($route['type']=='api') {
+    require_once "./lib/GMSApiServer.class.php";
 
+    $server= new GMSApiServer($GMS);
+    $server->execute();
+}
+elseif(file_exists('smarty/libs/Smarty.class.php'))
+{
 	if(!$GMS->isUserAdded())
 	{
 		$module='useradd';

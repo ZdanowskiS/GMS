@@ -7,6 +7,9 @@ if($actiondata)
 	if(!$actiondata['name'])
 		$error['name']='Name is required!';
 
+    if($GMS->existsModelActionName($actiondata['modelid'], $actiondata['name']))
+        $error['name']='Action exists!';
+
 	if(!$error)
 	{
 		$id=$GMS->addAction($actiondata);

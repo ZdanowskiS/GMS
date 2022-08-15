@@ -49,7 +49,7 @@
         </TD>
     </TR>
 	{foreach from=$actionlist item=action}
-    <TR>
+    <TR class="list {cycle values="light,dark"}">
         <TD>
             <a href="?m=actioninfo&id={$action.id}">{$action.name}</a>
         </TD>

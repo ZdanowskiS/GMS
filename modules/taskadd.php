@@ -7,6 +7,11 @@ if($taskdata)
 	if(!$taskdata['name'])
 		$error['name']='Name is required!';
 
+    $taskdata['actionid']=($taskdata['actionid'] ? $taskdata['actionid'] : $_GET['actionid']);
+
+    if(!$taskdata['actionid'])
+		$error['name']='Action ID is required!';
+
 	if(!$error)
 	{
 		$id=$GMS->addTask($taskdata);

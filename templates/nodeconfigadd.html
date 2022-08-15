@@ -1,6 +1,7 @@
 {include file="header.html" title="GMS"}
 
-<form action="?m=nodeconfigadd" method="post">
+<form action="?m=nodeconfigadd&nodeid={$configdata.nodeid}" method="post">
+<input type="hidden" name="configadd[nodeid]" value="{$configdata.nodeid}">
 <TABLE>
 <THEAD>
     <TR>
@@ -8,7 +9,12 @@
             Name:
         </TD>
         <TD>
-			<input type="text" name="nodeconfigadd[name]" id='class' size="32" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$configdata.name}">
+            <SELECT size="1" name="configadd[name]" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$configdata.name}">
+				<OPTION VALUE="0">Select</OPTION>
+				{foreach from=$tasklist key=key item=task}
+           			<OPTION value="{$task.name}" {if $configdata.name==$task.name}SELECTED{/if}>{$task.name}</OPTION>
+				{/foreach}
+			</SELECT>
         </TD>
     </TR>
 </THEAD>
@@ -17,7 +23,23 @@
             Value:
         </TD>
         <TD>
-            <input type="text" name="nodeconfigadd[val]" size="32" title="" value="{$configdata.val}">
+            <input type="text" name="configadd[val]" size="32" title="" value="{$configdata.val}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Date from:
+        </TD>
+        <TD>
+            <input type="text" name="configadd[datefrom]" size="10" {if $error.datefrom}title="{$error.datefrom}" style="background-color : #FF0000;"{/if} value="{if $configdata.datefrom}{$configdata.datefrom|date_format:"%Y/%m/%d"}{/if}">
+        </TD>
+    </TR>
+    <TR>
+        <TD>
+            Date to:
+        </TD>
+        <TD>
+            <input type="text" name="configadd[dateto]" size="10" {if $error.dateto}title="{$error.dateto}" style="background-color : #FF0000;"{/if} value='{if $configdata.dateto}{$configdata.dateto|date_format:"%Y/%m/%d"}{/if}'>
         </TD>
     </TR>
     <TR>
@@ -25,7 +47,7 @@
             Node:
         </TD>
         <TD>
-			<SELECT size="1" name="nodeconfigadd[nodeid]" {if $error.modelid}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
+			<SELECT size="1" name="configadd[nodeid]" {if $error.modelid}title="{$error.modelid}" style="background-color : #FF0000;"{/if} >
 				<OPTION VALUE="0">Select</OPTION>
 				{foreach from=$nodelist key=key item=node}
            			<OPTION value="{$node.id}" {if $model.id==$actiondata.modelid}SELECTED{/if}>{$node.name} ({$node.id})</OPTION>

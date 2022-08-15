@@ -20,6 +20,14 @@
     </TR>
     <TR>
         <TD>
+            <B>GenieACS:</B>
+        </TD>
+        <TD>
+			<a href="?m=genieacsinfo&id={$nodeinfo.genieacsid}">{$nodeinfo.genieacsname}</a>
+        </TD>
+    </TR>
+    <TR>
+        <TD>
             <B>Model:<B>
         </TD>
         <TD>
@@ -75,6 +83,12 @@
 			Object:
         </TD>
         <TD>
+			Date from:
+        </TD>
+        <TD>
+			Date to:
+        </TD>
+        <TD>
 			Value:
         </TD>
         <TD align="right">
@@ -87,10 +101,16 @@
             {$config.name}
         </TD>
         <TD>
+            {$config.datefrom|date_format:"%Y/%m/%d"}
+        </TD>
+        <TD>
+            {$config.dateto|date_format:"%Y/%m/%d"}
+        </TD>
+        <TD>
             {$config.val}
         </TD>
 		<TD align="right">
-			<a href="?m=nodeconfigedit&id={$config.id}" title="Edit config">E</a>
+			<a href="?m=nodeconfigedit&id={$config.id}&modelid={$nodeinfo.modelid}" title="Edit config">E</a>
 			<a href="?m=nodeconfigdel&id={$config.id}" title="Delete config">X</a>
 		</TD>
     </TR>
@@ -108,10 +128,12 @@
 			</p>
 			Name:<SELECT size="1" name="configadd[name]">
 				<OPTION VALUE="0">Select</OPTION>
-				{foreach from=$tasklist key=key item=action}
-           			<OPTION value="{$action.name}" {if $model.id==$actiondata.modelid}SELECTED{/if}>{$action.name}</OPTION>
+				{foreach from=$tasklist key=key item=task}
+           			<OPTION value="{$task.name}" {if $configadd.name==$task.name}SELECTED{/if}>{$task.name}</OPTION>
 				{/foreach}
 			</SELECT>
+            From date: <input type="text" name="configadd[datefrom]" size="10" title="" value="{$config.datefrom|date_format:"%Y/%m/%d"}" placeholder="YYYY/MM/DD">
+            Date to: <input type="text" name="configadd[dateto]" size="10" title="" value="{$config.dateto|date_format:"%Y/%m/%d"}" placeholder="YYYY/MM/DD">
 			<BR>
 			Value:<input type="text" name="configadd[val]" size="32" title="" value="{$config.val}">
 			<input type="submit" value="Save" name="submit">

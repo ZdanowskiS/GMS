@@ -88,7 +88,7 @@ CREATE TABLE actions (
     modelid integer	NOT NULL
        REFERENCES models (id) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (id),
-	UNIQUE (name)
+	UNIQUE (name,modelid)
 );
 
 DROP SEQUENCE IF EXISTS tasks_id_seq;
@@ -97,6 +97,7 @@ DROP TABLE IF EXISTS tasks CASCADE;
 CREATE TABLE tasks (
 	id integer          DEFAULT nextval('tasks_id_seq'::text) NOT NULL,
     name varchar(64)	DEFAULT '' NOT NULL,
+    defval varchar(128)	DEFAULT '' NOT NULL,
 	description varchar(255)	DEFAULT '' NOT NULL,
 	dataName SMALLINT NOT NULL,
 	dataType SMALLINT NOT NULL,
@@ -104,7 +105,7 @@ CREATE TABLE tasks (
     actionid integer NOT NULL
        REFERENCES actions (id) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (id),
-	UNIQUE (name)
+	UNIQUE (name,actionid)
 );
 
 DROP SEQUENCE IF EXISTS nodeconfig_id_seq;
@@ -116,5 +117,7 @@ CREATE TABLE nodeconfig (
     nodeid integer 
        REFERENCES nodes (id) ON DELETE CASCADE ON UPDATE CASCADE,
     val varchar(128)	DEFAULT '' NOT NULL,
+	datefrom integer	NOT NULL DEFAULT 0,
+	dateto integer		NOT NULL DEFAULT 0,
 	PRIMARY KEY (id)
 );

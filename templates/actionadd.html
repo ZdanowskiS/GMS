@@ -7,7 +7,8 @@
             Name:
         </TD>
         <TD>
-			<input type="text" name="actionadd[name]" class="name" maxlength="64" value="{$actiondata.name}" {if $error.modelid}title="{$error.name}" style="background-color : #FF0000;"{/if}>
+			<input type="text" name="actionadd[name]" class="name" maxlength="64" value="{$actiondata.name}" 
+{if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if}>
         </TD>
     </TR>
 	</THEAD>

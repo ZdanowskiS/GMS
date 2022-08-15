@@ -8,7 +8,8 @@
            GenieACS name:
         </TD>
         <TD>
-			<input type="text" name="genieacsadd[name]" class="name" maxlength="64" {if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.name}">
+			<input type="text" name="genieacsadd[name]" class="name" maxlength="64" value="{$genieacsdata.name}"
+{if $error.name}title="{$error.name}" style="background-color : #FF0000;"{/if} ">
         </TD>
     </TR>
 </THEAD>
@@ -17,7 +18,7 @@
            Ip addr:
         </TD>
         <TD>
-			<input type="text" name="genieacsadd[url]" class="name" maxlength="32" placeholder="http://127.0.0.1:7557/" {if $error.name}title="{$error.ipaddr}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.ipaddr}">
+			<input type="text" name="genieacsadd[url]" class="name" maxlength="32" placeholder="http://127.0.0.1:7557/"  value="{$genieacsdata.url}" {if $error.url}title="{$error.url}" style="background-color : #FF0000;"{/if}>
         </TD>
     </TR>
     <TR>
@@ -25,7 +26,7 @@
            Password:
         </TD>
         <TD>
-			<input type="text" name="genieacsadd[passwd]" class="passwd" maxlength="64" {if $error.name}title="{$error.passwd}" style="background-color : #FF0000;"{/if} value="{$genieacsdata.passwd}">
+			<input type="text" name="genieacsadd[passwd]" class="passwd" maxlength="64" value="{$genieacsdata.passwd}" {if $error.passwd}title="{$error.passwd}" style="background-color : #FF0000;"{/if} >
         </TD>
     </TR>
     <TR class="foot">
