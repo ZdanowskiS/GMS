@@ -1,10 +1,11 @@
 # GMS
 Genie Managment System
 
-GMS is based on LMS architecture and is addressed for LMS users.
+GMS is based on LMS architecture and is addressed to LMS users.
 
 Working with PostgreSQL database. It allows storing some customer data and CPE configuration.
 Therfore GMS can be used on its own without LMS. At the same time it is not meant to replace Lan Management System or any similar solution.
+Data from other systems can be copied and managed using customer _externalid_.
 
 # Installation
 1. Configure Apache2 virtual host.
@@ -16,7 +17,7 @@ Therfore GMS can be used on its own without LMS. At the same time it is not mean
 2. GMS allows creating multiple actions for configuring different CPE functions.
 3. GMS can set configuration from web page.
 
-GMS can't send configuration to CPE on GenieACS request. This functionality requires additional communication API. 
+GMS can't send configuration to CPE on GenieACS request. This functionality requires additional communication API. API can be based on solution available in LightCSV-Genieacs.
 
 # Support
 
