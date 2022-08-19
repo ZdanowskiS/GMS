@@ -6,7 +6,8 @@ class GMSGenieACS {
 
 	public function _construct(string $url)
 	{
-		$this->url=$url;
+		#$this->url=$url;
+        $this->setUrl($url);
 	}
 
 	public function setUrl(string $url)
@@ -42,7 +43,7 @@ class GMSGenieACS {
 
 
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $this->url.$action);
+		curl_setopt($curl, CURLOPT_URL, trim($this->url).trim($action));
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

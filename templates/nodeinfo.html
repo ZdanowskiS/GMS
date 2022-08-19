@@ -1,4 +1,10 @@
 {include file="header.html" title="GMS"}
+<script>
+function run(actionid){
+window.open("/?m=actionrun&actionid="+actionid+"&nodeid="+{$nodeinfo.id}, "", "width=400,height=300")
+}
+</script>
+
 <TABLE>
 	<THEAD>
     <TR>
@@ -166,7 +172,7 @@
             <a href="?m=actioninfo&amp;id={$action.id}" title="Action info">{$action.name}
         </TD>
         <TD align="right">
-			<a href="?m=actionrun&amp;actionid={$action.id}&amp;nodeid={$nodeinfo.id}" title="Run action">R</a>
+            <button onclick="run({$action.id})">R</button>
         </TD>
 	</TR>
 	{foreachelse}

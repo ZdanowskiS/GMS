@@ -115,5 +115,32 @@ class GMSPostgres {
     {
 		return @pg_fetch_array($result ? $result : $this->result, null, PGSQL_ASSOC);
     }
+
+//FROM Lan Managment System
+    public function quote_value($input)
+    {
+        if ($input === null) {
+            return 'NULL';
+        } elseif (is_string($input)) {
+            return '\'' . addcslashes($input, "'\\\0") . '\'';
+        } elseif (is_array($input)) {
+            return $this->_quote_array($input);
+        } else {
+            return $input;
+        }
+    }
+
+    protected function _quote_array(array $input)
+    {
+        if (!$input) {
+            return 'NULL';
+        }
+
+        foreach ($input as $k => $v) {
+            $input[$k] = $this->_quote_value($v);
+        }
+
+        return '(' . implode(',', $input) . ')';
+    }
 }
 ?>

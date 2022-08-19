@@ -2,7 +2,9 @@
 $actionid=intval($_GET['actionid']);
 $nodeid=intval($_GET['nodeid']);
 
-$GMS->runAction($nodeid, $actionid);
+$result=$GMS->runAction($nodeid, $actionid);
 
-header('Location: ?m=nodeinfo&id='.$nodeid);
+$smarty->assign('result', $result);
+$smarty->display('actionrun.html');
+#header('Location: ?m=nodeinfo&id='.$nodeid);
 ?>

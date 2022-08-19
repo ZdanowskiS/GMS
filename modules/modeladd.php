@@ -9,7 +9,7 @@ if($modeldata)
     elseif($GMS->getModelByName($modeldata['name']))
 		$error['name']='Name exists!';
 
-	if(!$error)
+	if(!is_array($error))
 	{
 		$id=$GMS->addModel($modeldata);
 		header('Location: ?m=modelinfo&id='.$id);

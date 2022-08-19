@@ -407,7 +407,7 @@ class GMS {
 
 	public function existsNodeConfig(int $id, string $name)
 	{
-		if($this->db->GetOne('SELECT 1 FROM nodeconfig WHERE nodeid=? AND name=?',
+		if($this->db->GetOne('SELECT 1 FROM nodeconfig WHERE nodeid=? AND name=?', 
 							array($id,$name)))
 			return TRUE;
 		else
@@ -480,12 +480,12 @@ class GMS {
 
 	public function getGenieacsByName(string $name)
 	{
-		return $this->db->GetOne('SELECT id FROM genieacs WHERE name LIKE \''.$name.'\'');
+		return $this->db->GetOne('SELECT id FROM genieacs WHERE name LIKE '.$this->db->quote_value($name));
 	}
 
 	public function getGenieacsByUrl(string $url)
 	{
-		return $this->db->GetOne('SELECT id FROM genieacs WHERE url LIKE \''.$url.'\'');
+		return $this->db->GetOne('SELECT id FROM genieacs WHERE url LIKE '.$this->db->quote_value($url));
 	}
 
 	public function getGenieacsList()
@@ -532,13 +532,11 @@ class GMS {
 		return;
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function runAction($nodeid,$actionid)
+    public function runAction(int $nodeid, int $actionid)
     {
         $tasks = $this->getNodeActionTasks($nodeid, $actionid);
 
-		$this->setParameters($nodeid,$tasks);
-
-        return;
+		return $this->setParameters($nodeid,$tasks);
     }
 
 	private function setParameters(int $nodeid, array $parameters)
@@ -569,7 +567,7 @@ class GMS {
 	}
 
 
-    public function executeTask($task)
+    public function executeTask(array $task)
     {
         if(array_key_exists('name', $task) && $task['name']=="addTag"){
             $result = $this->AddTag($task['param']);
@@ -584,9 +582,8 @@ class GMS {
         return $result;
     }
 
-
 //
-	public function parseTask($name, $nodeid)
+	public function parseTask(string $name, int $nodeid)
 	{
         $date=time();
 		$result=$this->db->GetRow('SELECT val FROM nodeconfig WHERE nodeid=? AND name=? 
@@ -600,7 +597,19 @@ class GMS {
 		return $result['val'];
 	}
 //
-    public function getNodeActionTasks($nodeid, $actionid)
+
+    public function getNodeAction(string $serial, string $action)
+    {
+        $action= $this->db->GetRow('SELECT a.id as actionid, n.id as nodeid FROM nodes n 
+                                        JOIN actions a ON (n.modelid=a.modelid) 
+                                        WHERE serial LIKE '.$this->db->quote_value($serial).' 
+                                            AND a.name LIKE '.$this->db->quote_value($action),
+                                     array($serial));
+
+        return $action;
+    }
+
+    public function getNodeActionTasks(int $nodeid, int $actionid)
     {
         global $DATATYPE;
 
@@ -673,7 +682,7 @@ class GMS {
 		return;
 	}
 
-    public function verifyPassword($login,$passwd)
+    public function verifyPassword(string $login, string $passwd)
     {
 
 		$user=$this->db->GetRow('SELECT id, passwd FROM users WHERE login LIKE ?',array($login));
@@ -685,6 +694,13 @@ class GMS {
 
         $this->error = 'Wrong password or login';
         return false;
+    }
+
+    public function verifyGenieacs($token)
+    {
+		$result=$this->db->GetOne('SELECT id FROM genieacs WHERE passwd LIKE '.$this->db->quote_value($token));
+
+        return $result;
     }
 
 	public function addSession($userid)
@@ -719,5 +735,7 @@ class GMS {
 		else
 			return FALSE;
 	}
+
+////
 }
 ?>

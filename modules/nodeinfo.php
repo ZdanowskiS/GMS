@@ -11,6 +11,7 @@ $smarty->assign('Name', 'Node Info');
 
 $nodeconfig=$GMS->getNodeConfigList($id);
 
+
 $smarty->assign('nodeinfo', $nodeinfo);
 $smarty->assign('nodeconfig', $nodeconfig);
 $smarty->assign('tasklist', $GMS->getModelTaskNames($nodeinfo['modelid']));

@@ -6,11 +6,13 @@ if($actiondata)
 {
 	if(!$actiondata['name'])
 		$error['name']='Name is required!';
+    else
+        $actiondata['name']=trim($actiondata['name']);
 
     if($GMS->existsModelActionName($actiondata['modelid'], $actiondata['name']))
         $error['name']='Action exists!';
 
-	if(!$error)
+	if(!is_array($error))
 	{
 		$id=$GMS->addAction($actiondata);
 		header('Location: ?m=actioninfo&id='.$id);

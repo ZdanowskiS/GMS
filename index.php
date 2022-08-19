@@ -41,11 +41,13 @@ $CONFIG = (array) parse_ini_file(CONFIG_FILE, true);
 //
 $route=parseURI();
 
-if ($route['type']=='api') {
+if ($route['type']=='genieacs') {
     require_once "./lib/GMSApiServer.class.php";
 
     $server= new GMSApiServer($GMS);
-    $server->execute();
+    $result = $server->execute();
+
+    echo $result;
 }
 elseif(file_exists('smarty/libs/Smarty.class.php'))
 {

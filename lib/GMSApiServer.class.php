@@ -17,8 +17,8 @@ class GMSApiServer {
 
         $this->method=$_SERVER['REQUEST_METHOD'];
         $this->password=$_POST['password'];
-        $this->login=$_POST['login'];
         $this->token=$_SERVER['HTTP_AUTHORIZATION'];
+        $this->parseURI();
     }
 
     public function parseURI()
@@ -26,103 +26,56 @@ class GMSApiServer {
         $uri=ltrim($_SERVER['REQUEST_URI'],'/');
         $tmp=explode('/',$uri);
         if($tmp[0]=='api')
-        {
             $this->type='genieacs';
-        }
+
+
         $this->uri=preg_replace('/[^a-z]/', '',$tmp[1]);
         $this->id=intval($tmp[2]);
     }
 
     public function authenticate()
     {
-        $result = $this->GMS->verifyPassword($this->login,$this->password);
-        $this->token=$this->GMS->addSession($user['id']);
-    }
+        $result = $this->GMS->verifyGenieacs($this->token);
 
-    public function autorization()
-    {
-        $result=$this->GMS->isLoged($this->token);
         return $result;
     }
 
     public function execute()
     {
-        if(!$this->token)
-            $this->token=$this->authenticate();
 
         if($this->token)
 		{
-			$result =$this->autorization();
+            $result =$this->authenticate();
 
-			if(!$result){
+			if(!$result)
 				return '401 Unauthorized';
-			}
 		}
         else
 		    return '401 Unauthorized';
 
-		if(($this->method!='POST' || $this->uri!='authenticate'))
-		{
-			return '401 Unauthorized';
-		}
 
 		switch($this->method) {
 			 case 'GET':
                  return $this->GET();
-              break;
-			 case 'POST':
-                 return $this->POST();
-              break;
-			 case 'PUT':
-                 return $this->PUT();
               break;
 			default:
 				return '400 Bad Request';
 		}
     }
 
-	public function PUT()
-	{
-        $input=json_decode(file_get_contents('php://input'));
-
-		switch($this->uri) {
-			default:
-				return '400 Bad Request';
-		}
-	}
-
-	public function POST()
-	{
-		switch($this->uri) {
-			default:
-				return '400 Bad Request';
-		}
-	}
-
 	public function GET()
 	{
         $input=json_decode(file_get_contents('php://input'));
 
-		switch($this->uri) {
-			case 'cutomers':
+        $nodeaction = $this->GMS->getNodeAction($input->{'serial'}, $this->uri);
 
-			    return json_encode($result);
-            break;
-			case 'nodes':
+        $result=$this->GMS->getNodeActionTasks($nodeaction['nodeid'],$nodeaction['actionid']);
 
-			    return json_encode($result);
-            break;
-			case 'action':
+        if(is_array($result))
+            return json_encode($result);
+        else
+            return '400 Bad Request';
 
-			    return json_encode($result);
-            break;
-			case 'tasks':
-
-			    return json_encode($result);
-            break;
-			default:
-				return '400 Bad Request';
-		}
 	}
 }
 ?>
