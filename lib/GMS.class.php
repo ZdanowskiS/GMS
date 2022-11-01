@@ -382,9 +382,9 @@ class GMS {
 							array($data['name'],
 									$data['serial'],
 									($data['deviceid'] ? $data['deviceid'] : ''),
-									$data['serial'],
 									($data['address'] ? $data['address'] : ''),
 									$data['customerid'],
+									$data['modelid'],
 									$data['genieacsid'],
 									$data['id']));
 		return;
